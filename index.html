@@ -60,6 +60,39 @@
             font-weight: 600;
             margin-bottom: 10px;
             padding-left: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6c757d;
+            transition: background 0.3s;
+        }
+
+        .status-dot.connecting {
+            background: #ffc107;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .status-dot.connected {
+            background: #28a745;
+        }
+
+        .status-dot.error {
+            background: #dc3545;
+        }
+
+        .status-dot.disconnected {
+            background: #6c757d;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .video-container {
@@ -80,7 +113,7 @@
         .controls {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-top: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
@@ -113,49 +146,7 @@
             transform: none;
         }
 
-        .status {
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            font-weight: 500;
-            font-size: 14px;
-        }
 
-        .status.connecting {
-            background: #fff3cd;
-            color: #856404;
-            border-left: 4px solid #ffc107;
-        }
-
-        .status.connected {
-            background: #d4edda;
-            color: #155724;
-            border-left: 4px solid #28a745;
-        }
-
-        .status.error {
-            background: #f8d7da;
-            color: #721c24;
-            border-left: 4px solid #dc3545;
-        }
-
-        .status.disconnected {
-            background: #e2e3e5;
-            color: #383d41;
-            border-left: 4px solid #6c757d;
-        }
-
-        .info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .info strong {
-            color: #333;
-        }
 
         .loading {
             position: absolute;
@@ -207,16 +198,12 @@
         <h1>📹 Camera Viewer</h1>
         <p class="subtitle">Live Split Screen WebRTC Stream</p>
 
-        <div class="controls">
-            <button id="connectBtn" onclick="connectAll()">Connect All Cameras</button>
-            <button id="disconnectBtn" onclick="disconnectAll()">Disconnect All</button>
-            <button onclick="reconnectAll()">Reconnect</button>
-        </div>
-
         <div class="cameras-grid">
             <div class="camera-section">
-                <div class="camera-title">Living Room</div>
-                <div class="status disconnected" id="status1">Connecting...</div>
+                <div class="camera-title">
+                    <span class="status-dot disconnected" id="status1"></span>
+                    Living Room
+                </div>
                 <div class="video-container">
                     <video id="video1" controls autoplay muted playsinline></video>
                     <div class="loading" id="loading1">
@@ -227,8 +214,10 @@
             </div>
 
             <div class="camera-section">
-                <div class="camera-title">Upstairs</div>
-                <div class="status disconnected" id="status2">Connecting...</div>
+                <div class="camera-title">
+                    <span class="status-dot disconnected" id="status2"></span>
+                    Upstairs
+                </div>
                 <div class="video-container">
                     <video id="video2" controls autoplay muted playsinline></video>
                     <div class="loading" id="loading2">
@@ -239,9 +228,10 @@
             </div>
         </div>
 
-        <div class="info">
-            <strong>Protocol:</strong> WebRTC via go2rtc<br>
-            <strong>Note:</strong> Make sure go2rtc is running (docker compose up) and configured with your camera credentials.
+        <div class="controls">
+            <button id="connectBtn" onclick="connectAll()">Connect All Cameras</button>
+            <button id="disconnectBtn" onclick="disconnectAll()">Disconnect All</button>
+            <button onclick="reconnectAll()">Reconnect</button>
         </div>
     </div>
 
@@ -255,9 +245,8 @@
         const disconnectBtn = document.getElementById('disconnectBtn');
 
         function updateStatus(cameraId, message, type) {
-            const status = document.getElementById(`status${cameraId}`);
-            status.textContent = message;
-            status.className = `status ${type}`;
+            const statusDot = document.getElementById(`status${cameraId}`);
+            statusDot.className = `status-dot ${type}`;
         }
 
         async function connectCamera(camera) {
