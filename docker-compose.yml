@@ -19,6 +19,12 @@ services:
     restart: unless-stopped
     networks:
       - camera-net
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:1984/api/streams"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   web:
     image: nginx:alpine
@@ -31,6 +37,12 @@ services:
     restart: unless-stopped
     networks:
       - camera-net
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 
 networks:
   camera-net:
