@@ -3,7 +3,7 @@ version: '3.8'
 services:
   go2rtc:
     image: alexxit/go2rtc:latest
-    container_name: go2rtc
+    container_name: splitcam_go2rtc
     ports:
       - "1984:1984"  # Web UI and API
       - "8554:8554"  # RTSP server
@@ -28,7 +28,7 @@ services:
 
   web:
     image: nginx:alpine
-    container_name: camera-web
+    container_name: splitcam_camera-web
     ports:
       - "8082:80"  # Camera viewer web interface
     volumes:
