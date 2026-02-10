@@ -17,6 +17,8 @@ services:
       - CAMERA1_IP=${CAMERA1_IP}
       - CAMERA2_IP=${CAMERA2_IP}
     restart: unless-stopped
+    networks:
+      - camera-net
 
   web:
     image: nginx:alpine
@@ -27,3 +29,9 @@ services:
       - ./index.html:/usr/share/nginx/html/index.html:ro
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
     restart: unless-stopped
+    networks:
+      - camera-net
+
+networks:
+  camera-net:
+    driver: bridge

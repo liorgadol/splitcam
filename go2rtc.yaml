@@ -12,8 +12,7 @@ api:
 webrtc:
   listen: ":8555"
   candidates:
-    - 127.0.0.1:8555
-    - stun:8555
+    - localhost:8555
 
 log:
   level: info

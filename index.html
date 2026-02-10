@@ -301,6 +301,13 @@
                     }
                 };
 
+                // Log ICE candidates
+                camera.pc.onicecandidate = (event) => {
+                    if (event.candidate) {
+                        console.log(`Camera ${camera.id} ICE candidate:`, event.candidate.candidate);
+                    }
+                };
+
                 // Add transceivers for video and audio
                 camera.pc.addTransceiver('video', {direction: 'recvonly'});
                 camera.pc.addTransceiver('audio', {direction: 'recvonly'});
@@ -309,8 +316,23 @@
                 const offer = await camera.pc.createOffer();
                 await camera.pc.setLocalDescription(offer);
 
+                // Wait for ICE gathering to complete
+                if (camera.pc.iceGatheringState !== 'complete') {
+                    await new Promise(resolve => {
+                        const checkState = () => {
+                            if (camera.pc.iceGatheringState === 'complete') {
+                                camera.pc.removeEventListener('icegatheringstatechange', checkState);
+                                resolve();
+                            }
+                        };
+                        camera.pc.addEventListener('icegatheringstatechange', checkState);
+                        // Timeout after 3 seconds
+                        setTimeout(resolve, 3000);
+                    });
+                }
+
                 // Send offer to go2rtc and get answer
-                const response = await fetch(`http://localhost:1984/api/webrtc?src=${camera.name}`, {
+                const response = await fetch(`/api/webrtc?src=${camera.name}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/sdp'
