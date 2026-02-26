@@ -8,7 +8,7 @@ services:
       - "8555:8555/tcp"  # WebRTC
       - "8555:8555/udp"  # WebRTC
     volumes:
-      - ./go2rtc.yaml:/config/go2rtc.yaml
+      - ./config:/config
     environment:
       - CAMERA_USER=${CAMERA_USER}
       - CAMERA_PASSWORD=${CAMERA_PASSWORD}
