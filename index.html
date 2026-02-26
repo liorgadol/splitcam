@@ -173,6 +173,338 @@
             100% { transform: rotate(360deg); }
         }
 
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #666;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab:hover {
+            color: #667eea;
+            background: none;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .control-panel {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .control-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .control-info {
+            color: #666;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .recordings-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .camera-recordings {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .camera-recordings h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recording-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .recording-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .recording-info {
+            flex: 1;
+        }
+
+        .recording-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .recording-meta {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .recording-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #28a745;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #28a745;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .loading-text {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #000;
+            border-radius: 12px;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+        }
+
+        .modal-header {
+            background: #1a1a1a;
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-modal {
+            background: none;
+            color: white;
+            font-size: 24px;
+            padding: 5px 10px;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-video {
+            width: 100%;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recording-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .recording-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+        }
+
         @media (max-width: 480px) {
             .cameras-grid {
                 grid-template-columns: 1fr;
@@ -198,7 +530,15 @@
         <h1>📹 Camera Viewer</h1>
         <p class="subtitle">Live Split Screen WebRTC Stream</p>
 
-        <div class="cameras-grid">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('live')">🔴 Live View</button>
+            <button class="tab" onclick="switchTab('recordings')">📼 Recordings</button>
+            <button class="tab" onclick="switchTab('settings')">⚙️ Settings</button>
+        </div>
+
+        <!-- Live View Tab -->
+        <div id="liveTab" class="tab-content active">
+            <div class="cameras-grid">
             <div class="camera-section">
                 <div class="camera-title">
                     <span class="status-dot disconnected" id="status1"></span>
@@ -228,10 +568,146 @@
             </div>
         </div>
 
-        <div class="controls">
-            <button id="connectBtn" onclick="connectAll()">Connect All Cameras</button>
-            <button id="disconnectBtn" onclick="disconnectAll()">Disconnect All</button>
-            <button onclick="reconnectAll()">Reconnect</button>
+            <div class="controls">
+                <button id="connectBtn" onclick="connectAll()">Connect All Cameras</button>
+                <button id="disconnectBtn" onclick="disconnectAll()">Disconnect All</button>
+                <button onclick="reconnectAll()">Reconnect</button>
+            </div>
+        </div>
+
+        <!-- Recordings Tab -->
+        <div id="recordingsTab" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalRecordings">0</div>
+                    <div class="stat-label">Total Recordings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalSize">0 GB</div>
+                    <div class="stat-label">Storage Used</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="camera1Count">0</div>
+                    <div class="stat-label">Living Room Files</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="camera2Count">0</div>
+                    <div class="stat-label">Upstairs Files</div>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px;">
+                <h2 style="margin: 0;">Recording Files</h2>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <div style="display: flex; gap: 5px;">
+                        <button id="filterCamera1" class="btn-small" onclick="filterRecordings('camera1')" style="background: #667eea;">Living Room</button>
+                        <button id="filterCamera2" class="btn-small btn-secondary" onclick="filterRecordings('camera2')">Upstairs</button>
+                    </div>
+                    <button onclick="loadRecordings()">🔄 Refresh</button>
+                </div>
+            </div>
+
+            <div id="recordingsList" class="recordings-list">
+                <div class="loading-text">Loading recordings...</div>
+            </div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="settingsTab" class="tab-content">
+            <div class="control-panel">
+                <h2 style="margin-bottom: 20px;">Recording Settings</h2>
+                
+                <div class="control-group" style="padding: 20px; background: white; border-radius: 8px; margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <label class="control-label" style="margin-bottom: 5px;">Recording Status</label>
+                            <div class="control-info" style="margin-top: 5px;">Enable or disable recording for all cameras</div>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="recordingToggle" onchange="toggleRecording()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div id="recordingStatus" style="margin-top: 15px; padding: 10px; border-radius: 6px; background: #e9ecef; color: #495057; border: 1px solid #dee2e6;">
+                        ⏳ Checking recording status...
+                    </div>
+                </div>
+                
+                <div class="settings-grid">
+                    <div class="control-group">
+                        <label class="control-label">Segment Duration (minutes)</label>
+                        <input type="number" id="segmentTime" class="control-input" value="10" min="1" max="60">
+                        <div class="control-info">Duration of each recording file (1-60 minutes). Currently: 10 minutes</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Retention Period (hours)</label>
+                        <input type="number" id="retentionHours" class="control-input" value="24" min="1" max="168">
+                        <div class="control-info">How long to keep recordings before auto-deletion (1-168 hours). Currently: 24 hours</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Video Quality</label>
+                        <select id="videoQuality" class="control-input">
+                            <option value="copy" selected>Source Quality (Copy)</option>
+                            <option value="high">High (1080p)</option>
+                            <option value="medium">Medium (720p)</option>
+                            <option value="low">Low (480p)</option>
+                        </select>
+                        <div class="control-info">Video encoding quality. "Copy" preserves original quality without re-encoding.</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Audio Bitrate</label>
+                        <select id="audioBitrate" class="control-input">
+                            <option value="48k">48 kbps (Low)</option>
+                            <option value="96k">96 kbps (Medium)</option>
+                            <option value="128k" selected>128 kbps (High)</option>
+                            <option value="192k">192 kbps (Very High)</option>
+                        </select>
+                        <div class="control-info">Audio quality for recordings. Currently: 128 kbps</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #e0e0e0;">
+                    <button onclick="applySettings()" style="margin-right: 10px;">💾 Apply Settings</button>
+                    <button onclick="resetSettings()" class="btn-secondary">🔄 Reset to Default</button>
+                    <div class="control-info" style="margin-top: 15px;">
+                        ⚠️ Note: Applying new settings will restart the recording containers. Active recordings will be saved before restart.
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel" style="margin-top: 20px;">
+                <h2 style="margin-bottom: 20px;">Storage Management</h2>
+                
+                <div class="control-group">
+                    <button onclick="cleanOldRecordings()" class="btn-secondary">🗑️ Clean Old Recordings Now</button>
+                    <div class="control-info" style="margin-top: 10px;">
+                        Manually trigger cleanup of recordings older than the retention period.
+                    </div>
+                </div>
+
+                <div class="control-group" style="margin-top: 20px;">
+                    <button onclick="deleteAllRecordings()" class="btn-danger">⚠️ Delete All Recordings</button>
+                    <div class="control-info" style="margin-top: 10px;">
+                        Permanently delete all recording files from both cameras. This cannot be undone!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Playback Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Recording Playback</div>
+                <button class="close-modal" onclick="closeVideoModal()">×</button>
+            </div>
+            <video id="modalVideo" class="modal-video" controls autoplay></video
+                </div>
+            </div>
         </div>
     </div>
 
@@ -240,6 +716,15 @@
             { id: 1, name: 'camera1', pc: null },
             { id: 2, name: 'camera2', pc: null }
         ];
+
+        // Camera display names
+        const cameraNames = {
+            'camera1': 'Living Room',
+            'camera2': 'Upstairs'
+        };
+
+        // Recording filter state
+        let currentFilter = 'camera1';
 
         const connectBtn = document.getElementById('connectBtn');
         const disconnectBtn = document.getElementById('disconnectBtn');
@@ -388,10 +873,371 @@
         window.addEventListener('load', () => {
             console.log('Auto-connecting cameras...');
             connectAll();
+            // Check recording status on page load
+            checkRecordingStatus();
         });
 
         // Cleanup on page unload
         window.addEventListener('beforeunload', disconnectAll);
+
+        // =================== TAB SWITCHING ===================
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected tab
+            const tabs = {
+                'live': 'liveTab',
+                'recordings': 'recordingsTab',
+                'settings': 'settingsTab'
+            };
+
+            document.getElementById(tabs[tabName]).classList.add('active');
+            event.target.classList.add('active');
+
+            // Load recordings when switching to recordings tab
+            if (tabName === 'recordings') {
+                loadRecordings();
+            }
+            
+            // Check recording status when switching to settings tab
+            if (tabName === 'settings') {
+                checkRecordingStatus();
+            }
+        }
+
+        // =================== RECORDINGS MANAGEMENT ===================
+        async function loadRecordings() {
+            const recordingsList = document.getElementById('recordingsList');
+            recordingsList.innerHTML = '<div class="loading-text">Loading recordings...</div>';
+
+            try {
+                const response = await fetch('/api/recordings');
+                const data = await response.json();
+
+                // Update statistics
+                document.getElementById('totalRecordings').textContent = data.total_count;
+                document.getElementById('totalSize').textContent = formatBytes(data.total_size);
+                document.getElementById('camera1Count').textContent = data.cameras.camera1.count;
+                document.getElementById('camera2Count').textContent = data.cameras.camera2.count;
+
+                // Display recordings
+                if (data.total_count === 0) {
+                    recordingsList.innerHTML = '<div class="loading-text">No recordings found</div>';
+                    return;
+                }
+
+                let html = '';
+                let displayedCount = 0;
+                
+                for (const [cameraName, cameraData] of Object.entries(data.cameras)) {
+                    // Apply filter
+                    if (currentFilter !== 'all' && currentFilter !== cameraName) continue;
+                    if (cameraData.files.length === 0) continue;
+
+                    const displayName = cameraNames[cameraName] || cameraName;
+                    
+                    html += `
+                        <div class="camera-recordings" data-camera="${cameraName}">
+                            <h3>📹 ${displayName} (${cameraData.count} files, ${formatBytes(cameraData.size)})</h3>
+                    `;
+
+                    // Sort files by name (which includes timestamp) in descending order
+                    cameraData.files.sort((a, b) => b.name.localeCompare(a.name));
+
+                    cameraData.files.forEach(file => {
+                        const datetime = parseRecordingDate(file.name);
+                        html += `
+                            <div class="recording-item">
+                                <div class="recording-info">
+                                    <div class="recording-name">📁 ${file.name}</div>
+                                    <div class="recording-meta">
+                                        📅 ${datetime} • 💾 ${formatBytes(file.size)} • ⏱️ ~${file.duration || '10'} minutes
+                                    </div>
+                                </div>
+                                <div class="recording-actions">
+                                    <button class="btn-small" onclick="playRecording('${cameraName}', '${file.name}')">▶️ Play</button>
+                                    <button class="btn-small btn-secondary" onclick="downloadRecording('${cameraName}', '${file.name}')">⬇️ Download</button>
+                                    <button class="btn-small btn-danger" onclick="deleteRecording('${cameraName}', '${file.name}')">🗑️ Delete</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    html += '</div>';
+                    displayedCount++;
+                }
+
+                if (displayedCount === 0) {
+                    recordingsList.innerHTML = '<div class="loading-text">No recordings found for selected camera</div>';
+                } else {
+                    recordingsList.innerHTML = html;
+                }
+
+            } catch (error) {
+                console.error('Error loading recordings:', error);
+                recordingsList.innerHTML = '<div class="loading-text">Error loading recordings. Make sure the API service is running.</div>';
+            }
+        }
+
+        function filterRecordings(filter) {
+            currentFilter = filter;
+            
+            // Update button styles
+            document.getElementById('filterCamera1').className = filter === 'camera1' ? 'btn-small' : 'btn-small btn-secondary';
+            document.getElementById('filterCamera1').style.background = filter === 'camera1' ? '#667eea' : '';
+            document.getElementById('filterCamera2').className = filter === 'camera2' ? 'btn-small' : 'btn-small btn-secondary';
+            document.getElementById('filterCamera2').style.background = filter === 'camera2' ? '#667eea' : '';
+            
+            // Reload recordings with new filter
+            loadRecordings();
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function parseRecordingDate(filename) {
+            // Parse format: 2026-02-13_11-21-02.mp4
+            const match = filename.match(/(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2})-(\d{2})/);
+            if (match) {
+                const [_, year, month, day, hour, minute, second] = match;
+                return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+            }
+            return filename;
+        }
+
+        function playRecording(camera, filename) {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            const title = document.getElementById('modalTitle');
+
+            const displayName = cameraNames[camera] || camera;
+            title.textContent = `${displayName} - ${parseRecordingDate(filename)}`;
+            video.src = `/api/recordings/${camera}/${filename}`;
+            modal.classList.add('active');
+            video.play();
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const video = document.getElementById('modalVideo');
+            
+            video.pause();
+            video.src = '';
+            modal.classList.remove('active');
+        }
+
+        function downloadRecording(camera, filename) {
+            const link = document.createElement('a');
+            link.href = `/api/recordings/${camera}/${filename}`;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        async function deleteRecording(camera, filename) {
+            if (!confirm(`Are you sure you want to delete ${filename}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/recordings/${camera}/${filename}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    alert('Recording deleted successfully');
+                    loadRecordings();
+                } else {
+                    alert('Failed to delete recording');
+                }
+            } catch (error) {
+                console.error('Error deleting recording:', error);
+                alert('Error deleting recording');
+            }
+        }
+
+        // =================== SETTINGS MANAGEMENT ===================
+        async function applySettings() {
+            const settings = {
+                segment_time: parseInt(document.getElementById('segmentTime').value),
+                retention_hours: parseInt(document.getElementById('retentionHours').value),
+                video_quality: document.getElementById('videoQuality').value,
+                audio_bitrate: document.getElementById('audioBitrate').value
+            };
+
+            if (!confirm('Applying new settings will restart the recording containers. Continue?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Settings applied successfully! Recording containers are restarting...');
+                } else {
+                    alert('Error applying settings: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error applying settings:', error);
+                alert('Error applying settings. Make sure the API service is running.');
+            }
+        }
+
+        function resetSettings() {
+            document.getElementById('segmentTime').value = 10;
+            document.getElementById('retentionHours').value = 24;
+            document.getElementById('videoQuality').value = 'copy';
+            document.getElementById('audioBitrate').value = '128k';
+        }
+
+        async function cleanOldRecordings() {
+            if (!confirm('This will delete recordings older than the retention period. Continue?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/cleanup', {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`Cleanup complete! Deleted ${result.deleted_count} old recordings.`);
+                    loadRecordings();
+                } else {
+                    alert('Error running cleanup: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error running cleanup:', error);
+                alert('Error running cleanup');
+            }
+        }
+
+        async function deleteAllRecordings() {
+            if (!confirm('⚠️ WARNING: This will permanently delete ALL recordings from both cameras. This cannot be undone!\n\nAre you absolutely sure?')) {
+                return;
+            }
+
+            if (!confirm('Last chance! Delete all recordings?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/recordings/all', {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert(`All recordings deleted! Removed ${result.deleted_count} files.`);
+                    loadRecordings();
+                } else {
+                    alert('Error deleting recordings: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error deleting recordings:', error);
+                alert('Error deleting recordings');
+            }
+        }
+
+        // =================== RECORDING TOGGLE ===================
+        async function toggleRecording() {
+            const toggle = document.getElementById('recordingToggle');
+            const statusDiv = document.getElementById('recordingStatus');
+            const isEnabled = toggle.checked;
+
+            try {
+                const response = await fetch('/api/recording/toggle', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enabled: isEnabled })
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    if (isEnabled) {
+                        statusDiv.style.background = '#d4edda';
+                        statusDiv.style.color = '#155724';
+                        statusDiv.style.borderColor = '#c3e6cb';
+                        statusDiv.innerHTML = '✅ Recording is currently <strong>ENABLED</strong>';
+                    } else {
+                        statusDiv.style.background = '#f8d7da';
+                        statusDiv.style.color = '#721c24';
+                        statusDiv.style.borderColor = '#f5c6cb';
+                        statusDiv.innerHTML = '⛔ Recording is currently <strong>DISABLED</strong>';
+                    }
+                } else {
+                    alert('Error toggling recording: ' + result.error);
+                    // Revert toggle on error
+                    toggle.checked = !isEnabled;
+                }
+            } catch (error) {
+                console.error('Error toggling recording:', error);
+                alert('Error toggling recording. Make sure the API service is running.');
+                // Revert toggle on error
+                toggle.checked = !isEnabled;
+            }
+        }
+
+        async function checkRecordingStatus() {
+            try {
+                const response = await fetch('/api/recording/status');
+                const result = await response.json();
+                
+                if (response.ok) {
+                    const toggle = document.getElementById('recordingToggle');
+                    const statusDiv = document.getElementById('recordingStatus');
+                    
+                    toggle.checked = result.enabled;
+                    
+                    if (result.enabled) {
+                        statusDiv.style.background = '#d4edda';
+                        statusDiv.style.color = '#155724';
+                        statusDiv.style.borderColor = '#c3e6cb';
+                        statusDiv.innerHTML = '✅ Recording is currently <strong>ENABLED</strong>';
+                    } else {
+                        statusDiv.style.background = '#f8d7da';
+                        statusDiv.style.color = '#721c24';
+                        statusDiv.style.borderColor = '#f5c6cb';
+                        statusDiv.innerHTML = '⛔ Recording is currently <strong>DISABLED</strong>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking recording status:', error);
+            }
+        }
+
+        // Close modal on outside click
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideoModal();
+            }
+        });
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
-# Camera Viewer - Split Screen
+# Camera Viewer - Split Screen with DVR
 
-WebRTC-based live camera viewer with split-screen support using go2rtc.
+WebRTC-based live camera viewer with split-screen support, DVR recording, and web-based control panel using go2rtc.
 
 ## 🚀 Quick Start
 
@@ -30,26 +30,127 @@ docker compose up -d
 
 This starts:
 - go2rtc (WebRTC gateway on port 1984)
-- nginx web server (camera viewer on port 8080)
+- nginx web server (camera viewer on port 8082)
+- FFmpeg recorders (DVR recording for each camera)
+- API service (recording management backend)
+- Cleanup service (automatic old recording deletion)
 
 ### Step 3: View Cameras
 
 Open your browser and navigate to:
 
-**http://localhost:8080**
+**http://localhost:8082**
 
 Both cameras will automatically connect and display side-by-side!
 
 ## 🎯 Features
 
+### Live Viewing
 - ✅ Split-screen view (side-by-side cameras)
 - ✅ Auto-connect on page load
 - ✅ Low-latency WebRTC streaming
-- ✅ Shared credentials via environment variables
 - ✅ Individual camera status indicators
 - ✅ Full browser controls (play, pause, volume, fullscreen)
 - ✅ Responsive design (stacks vertically on mobile)
-- ✅ Clean, modern UI
+
+### DVR Recording
+- ✅ Automatic continuous recording for all cameras
+- ✅ 10-minute MP4 segments (configurable)
+- ✅ 24-hour retention (configurable)
+- ✅ H.264 video with AAC audio
+- ✅ Automatic cleanup of old recordings
+
+### Control Panel
+- ✅ Web-based control panel for all settings
+- ✅ Recording viewer with playback
+- ✅ Download recordings
+- ✅ Delete individual or all recordings
+- ✅ Adjust segment duration (1-60 minutes)
+- ✅ Configure retention period (1-168 hours)
+- ✅ Video quality settings
+- ✅ Audio bitrate configuration
+- ✅ Storage usage statistics
+- ✅ Manual cleanup trigger
+
+## 📹 Using the Control Panel
+
+### Live View Tab
+- View live streams from both cameras
+- Real-time connection status
+- Connect/disconnect controls
+
+### Recordings Tab
+- Browse all recorded files organized by camera
+- View recording statistics (count, total size)
+- Play recordings in-browser
+- Download recordings to your computer
+- Delete individual recordings
+- See file sizes and timestamps
+
+### Settings Tab
+**Recording Settings:**
+- Segment Duration: How long each recording file should be (1-60 minutes)
+- Retention Period: How long to keep recordings before auto-deletion (1-168 hours)
+- Video Quality: Source quality (copy), or transcode to High/Medium/Low
+- Audio Bitrate: Audio quality for recordings (48k-192k)
+
+**Storage Management:**
+- Manually trigger cleanup of old recordings
+- Delete all recordings with confirmation
+
+⚠️ Note: Changing settings requires restarting the recording containers. Active recordings are saved before restart.
+
+## 🗂️ Recording Storage
+
+Recordings are stored in:
+```
+./recordings/
+  ├── camera1/
+  │   ├── 2026-02-13_11-21-02.mp4
+  │   ├── 2026-02-13_11-30-00.mp4
+  │   └── ...
+  └── camera2/
+      ├── 2026-02-13_11-21-02.mp4
+      ├── 2026-02-13_11-30-00.mp4
+      └── ...
+```
+
+File naming format: `YYYY-MM-DD_HH-MM-SS.mp4`
+, 8082, 8554, or 8555 are already in use, edit `docker-compose.yml`:
+```yaml
+ports:
+  - "8083:80"  # Change external port
+```
+
+### Recordings not appearing
+
+1. **Check recorder logs:**
+   ```bash
+   docker logs splitcam_recorder_camera1
+   docker logs splitcam_recorder_camera2
+   ```
+
+2. **Check API service:**
+   ```bash
+   docker logs splitcam_api
+   curl http://localhost:8082/api/recordings
+   ```
+2
+   ```
+
+Note: All ports (1984, 8082, 8554, 8555)
+   ls -lh recordings/camera2/
+   ```
+
+### High disk usage
+
+- Reduce retention period in Settings tab
+- Use lower video quality setting
+- Reduce segment duration
+- Manually clean old recordings
+http://localhost:8082/api/recordings/camera1/2026-02-13_11-21-02.mp4
+http://localhost:8082/api/recordings/camera2/2026-02-13_11-21-02.mp4
+```
 
 ## 📡 Adding More Cameras
 
@@ -123,42 +224,94 @@ ports:
 ```
 
 ## 📱 Access from Other Devices
-
-## 📱 Access from Other Devices
-
-1. Find your computer's IP address:
-   ```bash
-   ipconfig getifaddr en0  # macOS WiFi
-   # or
-   ip addr show  # Linux
-   ```
-
-2. Access from other device on same network:
-   ```
-   http://YOUR_COMPUTER_IP:8080
-   ```
-
-Note: Both go2rtc (1984) and WebRTC (8555) ports need to be accessible. The setup already exposes these ports.
-
-## 📋 Common RTSP URLs for Tapo/TP-Link Cameras
-
-Try these alternatives if `stream1` doesn't work:
-- `rtsp://user:pass@IP:554/stream1` (Main stream - high quality)
-- `rtsp://user:pass@IP:554/stream2` (Sub stream - lower quality)  
-- `rtsp://user:pass@IP/stream1` (Without port)
-
-## 🛠️ Configuration Files
-
-### docker-compose.yml
-Defines two services:
+all services:
 - `go2rtc`: WebRTC gateway (ports 1984, 8554, 8555)
-- `web`: Nginx serving index.html (port 8080)
+- `web`: Nginx serving index.html (port 8082)
+- `recorder-camera1` & `recorder-camera2`: FFmpeg DVR recorders
+- `api`: Python Flask API for recording management
+- `cleanup`: Automatic old recording cleanup (runs hourly)
 
 ### go2rtc.yaml
 Stream definitions with environment variable substitution:
 ```yaml
 streams:
   camera1:
+    - rtsp://${CAMERA_USER}:${CAMERA_PASSWORD}@${CAMERA1_IP}:554/stream1
+```
+
+### .env
+Credentials and IP addresses (not tracked in git)
+
+### index.html
+Split-screen viewer with tabs:
+- Live View: Real-time camera streaming
+- Recordings: Browse and playback recordings
+- Settings: Configure DVR settings
+
+### api/app.py
+Flask backend for:
+- Listing recordings
+- Serving recording files
+- Deleting recordings
+- Updating DVR settings
+- Managing storage
+## 📋 Common RTSP URLs for Tapo/TP-Link Cameras
+
+Try these alternatives if `stream1` doesn't work:
+- `rtsp:all services
+docker compose up -d
+
+# Stop all services
+docker compose down
+
+# View logs
+docker logs splitcam_go2rtc
+docker logs splitcam_camera-web
+docker logs splitcam_recorder_camera1
+docker logs splitcam_recorder_camera2
+docker logs splitcam_api
+
+# Restart after config changes
+docker compose restart
+
+# Restart just the recorders
+docker compose restart recorder-camera1 recorder-camera2
+
+# View running containers
+docker ps
+
+# Check recording storage usage
+du -sh recordings/*
+
+# Manually trigger cleanup
+docker exec splitcam_cleanup sh /cleanup-recordings.sh
+
+# Access API directly
+curl http://localhost:8082/api/recordings
+```
+
+## 💾 Disk Space Management
+
+### Estimated Storage Requirements
+
+With default settings (10-minute segments, 24-hour retention):
+- Camera 1 (2304x1296): ~3-4 MB per minute = ~4.3-5.8 GB per day
+- Camera 2 (1920x1080): ~1.5-2 MB per minute = ~2.2-2.9 GB per day
+- **Total: ~6.5-8.7 GB per day for 2 cameras**
+
+### Reducing Storage Usage
+
+1. **Decrease retention period** (Settings → Retention Period)
+   - 12 hours: ~3-4 GB total
+   - 6 hours: ~1.5-2 GB total
+
+2. **Lower video quality** (Settings → Video Quality)
+   - Medium (720p): ~60% of original size
+   - Low (480p): ~40% of original size
+
+3. **Copy original quality** (default)
+   - No re-encoding, preserves original quality
+   - Lowest CPU usageamera1:
     - rtsp://${CAMERA_USER}:${CAMERA_PASSWORD}@${CAMERA1_IP}:554/stream1
 ```
 
